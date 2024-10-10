@@ -3,7 +3,7 @@
 # FILENAME: db_connection_mongo.py
 # SPECIFICATION: Connects to given database and allows user to do CRUD operations on them via PyMongo.
 # FOR: CS 4250-01 Assignment #2
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 2-3 hours
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH AS numpy OR pandas. You have to work here only with
@@ -44,16 +44,16 @@ def createDocument(collection, docId, docText, docTitle, docDate, docCategory):
     #Insert the document
     collection.insert_one(document)
 
+#Delete doucment function
 def deleteDocument(collection, docId):
     collection.delete_one({'id': docId})
 
+#Delete the 'old' document, and replace it with the 'updated' document
 def updateDocument(collection, docId, docText, docTitle, docDate, docCategory):
-    #Delete the document to make place for the updated document
     deleteDocument(collection, docId)
-
-    #Create the document with the same ID value
     createDocument(collection, docId, docText, docTitle, docDate, docCategory)
 
+#Get the index of the collection
 def getIndex(collection):
     invertedIndex = {}
     
@@ -65,21 +65,22 @@ def getIndex(collection):
         #Get the title of the current doc
         title = document['title']
 
-        #Iterate through document terms
+        #Iterate through the current document terms
         for termInfo in document['terms']:
             term = termInfo['term']
             count = termInfo['count']
 
-            #Format term and count into a single string
+            #Format term and count into appropriate string
             entry = f"{title}:{count}"
 
+            #If term is not in the invertedIndex
             if term not in invertedIndex:
                 invertedIndex[term] = [entry] 
             
             #If term is already present, check if the entry is present
-            else:
-                if entry not in invertedIndex[term]:
-                    invertedIndex[term].append(entry)
+            elif entry not in invertedIndex[term]:
+                invertedIndex[term].append(entry)
+                
 
     # Format index
     formattedIndex = {term: ','.join(entries) for term, entries in invertedIndex.items()}

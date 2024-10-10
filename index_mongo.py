@@ -3,7 +3,7 @@
 # FILENAME: index_mongo.py
 # SPECIFICATION: Driver program for db_connection.mongo.py to trigger operations.
 # FOR: CS 4250-01 Assignment #2
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 2-3 hours
 #-----------------------------------------------------------*/
 
 from pymongo import MongoClient  # import mongo client to connect

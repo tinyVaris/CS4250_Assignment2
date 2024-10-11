@@ -30,7 +30,7 @@ def createDocument(collection, docId, docText, docTitle, docDate, docCategory):
         termCounts[term] = termCounts.get(term, 0) + 1
     
     #Create a list of dictionaries with term occurrences and their character counts
-    termList = [{'term': term, 'count': count, 'num_chars': len(term)} for term, count in termCounts.items()]
+    termList = [{'term': term, 'count': count} for term, count in termCounts.items()]
     
     #Producing a final document as a dictionary including all the required fields
     document = {

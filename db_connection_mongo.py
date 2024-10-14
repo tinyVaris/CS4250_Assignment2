@@ -50,21 +50,24 @@ def deleteDocument(collection, docId):
 
 #Delete the 'old' document, and replace it with the 'updated' document.
 def updateDocument(collection, docId, docText, docTitle, docDate, docCategory):
-    #Used to remove any punctuations in text
-    translator = str.maketrans('', '', string.punctuation)
+    deleteDocument(collection, docId)
+    createDocument(collection, docId, docText, docTitle, docDate, docCategory)
 
-    #Create a 'document' using dictionaries
-    terms = docText.translate(translator).lower().split(" ")
-    termCounts = {}
+    # #Used to remove any punctuations in text
+    # translator = str.maketrans('', '', string.punctuation)
+
+    # #Create a 'document' using dictionaries
+    # terms = docText.translate(translator).lower().split(" ")
+    # termCounts = {}
     
-    for term in terms:
-        termCounts[term] = termCounts.get(term, 0) + 1
+    # for term in terms:
+    #     termCounts[term] = termCounts.get(term, 0) + 1
     
-    #Create a list of dictionaries with term occurrences and their character counts
-    termList = [{'term': term, 'count': count} for term, count in termCounts.items()]
+    # #Create a list of dictionaries with term occurrences and their character counts
+    # termList = [{'term': term, 'count': count} for term, count in termCounts.items()]
     
-    #Update given document with new information, along with the new termList
-    collection.update_one({"id": docId}, {"$set": {'title': docTitle, 'date': docDate, 'category': docCategory, 'terms': termList}})
+    # #Update given document with new information, along with the new termList
+    # collection.update_one({"id": docId}, {"$set": {'title': docTitle, 'date': docDate, 'category': docCategory, 'terms': termList}})
 
 
 #Get the index of the collection
